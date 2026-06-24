@@ -1,4 +1,3 @@
-
 <h2 class="sr-only">Test rapide de compétences</h2>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -368,7 +367,7 @@
 <div class="t-wrap">
   <div id="quiz-view">
     <div class="t-header">
-      <span class="t-progress" id="t-prog">Question 1 / 12</span>
+      <span class="t-progress" id="t-prog">Question 1 / 20</span>
       <span class="t-score" id="t-sc">0 pts</span>
     </div>
     <div class="prog-bg"><div class="prog-fill" id="t-pfill" style="width:0%"></div></div>
@@ -409,7 +408,7 @@ const QUESTIONS = [
 
   { type:'scenario', badge:'Qualification', badgeColor:'#FAECE7', badgeText:'#712B13',
     q:'Qualifiez ce contrat en choisissant la bonne combinaison.',
-    scenario:'Diallo achète une assurance-vie. Il verse 25 000 FCFA/mois. S\'il décède, ses héritiers touchent 10 millions.',
+    scenario:'Paul achète une assurance-vie. Il verse 25 000 FCFA/mois. S\'il décède, ses héritiers touchent 10 millions.',
     opts:['Synallagmatique + onéreux + commutatif + successif','Synallagmatique + onéreux + aléatoire + successif','Unilatéral + gratuit + aléatoire + instantané','Synallagmatique + gratuit + aléatoire + successif'],
     ans:1, exp:'Synallagmatique (obligations réciproques), onéreux (primes contre couverture), ALÉATOIRE (le versement dépend du décès, événement incertain), successif (primes mensuelles).' },
 
@@ -423,8 +422,8 @@ const QUESTIONS = [
     ans:false, exp:'FAUX. L\'aléa fait obstacle à toute action en rescision pour lésion (art. 1108). En acceptant l\'aléa, les parties renoncent à se plaindre du déséquilibre éventuel.' },
 
   { type:'scenario', badge:'Piège', badgeColor:'#FAEEDA', badgeText:'#633806',
-    q:'Ibou prête 200 000 FCFA à Omar sans intérêt. Quel type de contrat ?',
-    scenario:'Ibou remet les billets à Omar. Omar s\'engage à rembourser dans 3 mois. Aucun intérêt n\'est prévu.',
+    q:'HAWA prête 200 000 FCFA à Bocar sans intérêt. Quel type de contrat ?',
+    scenario:'Pedro remet les billets à Ibrahima s\'engage à rembourser dans 3 mois. Aucun intérêt n\'est prévu.',
     opts:['Synallagmatique + onéreux','Unilatéral + gratuit + réel','Synallagmatique + gratuit + consensuel','Unilatéral + onéreux + solennel'],
     ans:1, exp:'Unilatéral (seul Omar s\'oblige à rembourser), gratuit (pas d\'intérêt = pas de contrepartie pour Ibou), réel (le contrat se forme à la REMISE des billets).' },
 
@@ -439,7 +438,7 @@ const QUESTIONS = [
 
   { type:'scenario', badge:'Qualification', badgeColor:'#FAECE7', badgeText:'#712B13',
     q:'Identifiez le bon type de formation de ce contrat.',
-    scenario:'Fatou achète un appartement. Le notaire rédige un acte authentique signé par les deux parties. Sans cet acte, la vente est nulle.',
+    scenario:'Bernadette achète un appartement. Le notaire rédige un acte authentique signé par les deux parties. Sans cet acte, la vente est nulle.',
     opts:['Contrat consensuel','Contrat réel','Contrat solennel','Contrat d\'adhésion'],
     ans:2, exp:'C\'est un contrat SOLENNEL : l\'acte notarié est une condition de VALIDITÉ (ad validitatem), pas seulement de preuve. Sans lui, la vente est nulle absolument.' },
 
@@ -453,8 +452,8 @@ const QUESTIONS = [
     ans:false, exp:'FAUX. L\'exception d\'inexécution (art. 1219) est réservée aux contrats SYNALLAGMATIQUES, où les obligations sont réciproques et interdépendantes. Dans un contrat unilatéral, une seule partie s\'oblige.' },
 
   { type:'scenario', badge:'Cas pratique', badgeColor:'#FAEEDA', badgeText:'#633806',
-    q:'Quel remède Aminata peut-elle utiliser ?',
-    scenario:'Aminata a signé un contrat de bail pour 2 ans. Son propriétaire ne répare plus rien depuis 6 mois malgré ses demandes écrites. Elle veut mettre fin au contrat.',
+    q:'Quel remède Constancia peut-elle utiliser ?',
+    scenario:'Ephraim a signé un contrat de bail pour 2 ans. Son propriétaire ne répare plus rien depuis 6 mois malgré ses demandes écrites. il veut mettre fin au contrat.',
     opts:['Demander la résolution avec effet rétroactif','Demander la résiliation pour l\'avenir','Invoquer la nullité relative','Demander des dommages-intérêts compensatoires uniquement'],
     ans:1, exp:'Bail = contrat à exécution SUCCESSIVE → on prononce la RÉSILIATION (effet pour l\'avenir, pas de rétroactivité). La résolution avec rétroactivité est réservée aux contrats instantanés.' },
 
@@ -474,7 +473,7 @@ const QUESTIONS = [
 
   { type:'scenario', badge:'Obligation', badgeColor:'#FAECE7', badgeText:'#712B13',
     q:'Classifiez cette obligation.',
-    scenario:'Karim s\'oblige à livrer 50 sacs de ciment à Koné dans un délai d\'une semaine. Si Karim n\'y arrive pas, il doit payer une pénalité de 50 000 FCFA.',
+    scenario:'Babacar s\'oblige à livrer 50 sacs de ciment à Koné dans un délai d\'une semaine. Si Babacar n\'y arrive pas, il doit payer une pénalité de 50 000 FCFA.',
     opts:['Naturelle + conditionnelle','Civile + simplement alternative','Civile + pure et simple','Civile + à terme','Civile + avec clause pénale'],
     ans:4, exp:'C\'est une obligation civile (exécutoire) avec CLAUSE PÉNALE : une somme fixée à l\'avance en cas de non-exécution ou retard, pour dédommager le créancier sans avoir à prouver le préjudice.' },
 
@@ -489,7 +488,7 @@ const QUESTIONS = [
 
   { type:'scenario', badge:'Prescription', badgeColor:'#FAEEDA', badgeText:'#633806',
     q:'Quand l\'action prescrit-elle ?',
-    scenario:'Moussa prête 100 000 FCFA à Sow en janvier 2020. Aucune reconnaissance de dette n\'a été signée. En 2026, Moussa demande le remboursement.',
+    scenario:'Alpha prête 100 000 FCFA à Sow en janvier 2020. Aucune reconnaissance de dette n\'a été signée. En 2026, Moussa demande le remboursement.',
     opts:['Action prescrite : 2 ans révolus','Action prescrite : 5 ans révolus','Action non prescrite : délai illimité pour prêt sans écrit','Action prescrite : 10 ans révolus'],
     ans:1, exp:'Prêt de consommation sans écrit → prescription 5 ans (art. 2272). De 2020 à 2026 = 6 ans révolus. L\'action est donc PRESCRITE.' },
 
