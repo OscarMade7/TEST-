@@ -359,9 +359,10 @@
   }
   
   .footer span {
-    color: #667eea;
-    font-weight: 600;
-  }
+  color: #667eea;
+  font-weight: 800; /* Plus fort que le 600 précédent */
+  text-transform: uppercase;
+}
 </style>
 
 <div class="t-wrap">
@@ -389,7 +390,7 @@
         <button onclick="sendPrompt('Quels sont les points sur lesquels je dois encore travailler en droit des contrats ?')">Que retravailler ? ↗</button>
       </div>
       <div class="footer">
-        Par votre humble serviteur <span>Doriel, Jr</span> — vous demande merci 🙏🏿✨
+        Par votre humble serviteur <span>**J. DORIEL,**</span> — JE VOUS DEMANDE MERCI 🙏🏿✨
       </div>
     </div>
   </div>
@@ -438,7 +439,7 @@ const QUESTIONS = [
 
   { type:'scenario', badge:'Qualification', badgeColor:'#FAECE7', badgeText:'#712B13',
     q:'Identifiez le bon type de formation de ce contrat.',
-    scenario:'Bernadette achète un appartement. Le notaire rédige un acte authentique signé par les deux parties. Sans cet acte, la vente est nulle.',
+    scenario:'Bernadette achète un appartement. La notaire Kouna rédige un acte authentique signé par les deux parties. Sans cet acte, la vente est nulle.',
     opts:['Contrat consensuel','Contrat réel','Contrat solennel','Contrat d\'adhésion'],
     ans:2, exp:'C\'est un contrat SOLENNEL : l\'acte notarié est une condition de VALIDITÉ (ad validitatem), pas seulement de preuve. Sans lui, la vente est nulle absolument.' },
 
@@ -453,7 +454,7 @@ const QUESTIONS = [
 
   { type:'scenario', badge:'Cas pratique', badgeColor:'#FAEEDA', badgeText:'#633806',
     q:'Quel remède Constancia peut-elle utiliser ?',
-    scenario:'Ephraim a signé un contrat de bail pour 2 ans. Son propriétaire ne répare plus rien depuis 6 mois malgré ses demandes écrites. il veut mettre fin au contrat.',
+    scenario:'Constancia a signé un contrat de bail pour 2 ans. Son propriétaire ne répare plus rien depuis 6 mois malgré ses demandes écrites. Elle veut mettre fin au contrat.',
     opts:['Demander la résolution avec effet rétroactif','Demander la résiliation pour l\'avenir','Invoquer la nullité relative','Demander des dommages-intérêts compensatoires uniquement'],
     ans:1, exp:'Bail = contrat à exécution SUCCESSIVE → on prononce la RÉSILIATION (effet pour l\'avenir, pas de rétroactivité). La résolution avec rétroactivité est réservée aux contrats instantanés.' },
 
@@ -473,7 +474,7 @@ const QUESTIONS = [
 
   { type:'scenario', badge:'Obligation', badgeColor:'#FAECE7', badgeText:'#712B13',
     q:'Classifiez cette obligation.',
-    scenario:'Babacar s\'oblige à livrer 50 sacs de ciment à Koné dans un délai d\'une semaine. Si Babacar n\'y arrive pas, il doit payer une pénalité de 50 000 FCFA.',
+    scenario:'Babacar s\'oblige à livrer 50 sacs de ciment à Pedro dans un délai d\'une semaine. Si Babacar n\'y arrive pas, il doit payer une pénalité de 50 000 FCFA.',
     opts:['Naturelle + conditionnelle','Civile + simplement alternative','Civile + pure et simple','Civile + à terme','Civile + avec clause pénale'],
     ans:4, exp:'C\'est une obligation civile (exécutoire) avec CLAUSE PÉNALE : une somme fixée à l\'avance en cas de non-exécution ou retard, pour dédommager le créancier sans avoir à prouver le préjudice.' },
 
