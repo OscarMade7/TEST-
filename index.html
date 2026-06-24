@@ -1,0 +1,604 @@
+
+<h2 class="sr-only">Test rapide de compétences</h2>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+  
+  .t-wrap { 
+    padding: 2.5rem 1.5rem; 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: white;
+    max-width: 700px;
+    margin: 2rem auto;
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  }
+  
+  .t-header { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #f0f0f0;
+  }
+  
+  .t-progress { 
+    font-size: 14px; 
+    font-weight: 600;
+    color: #667eea;
+    letter-spacing: 0.5px;
+  }
+  
+  .t-score { 
+    font-size: 18px; 
+    font-weight: 700; 
+    color: #1D9E75;
+    background: #E1F5EE;
+    padding: 6px 14px;
+    border-radius: 20px;
+  }
+  
+  .prog-bg { 
+    background: #e8e8ff; 
+    height: 8px; 
+    border-radius: 99px; 
+    margin-bottom: 2rem;
+    overflow: hidden;
+  }
+  
+  .prog-fill { 
+    height: 8px; 
+    border-radius: 99px; 
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    transition: width .5s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 0 10px rgba(102, 126, 234, 0.4);
+  }
+  
+  .t-type-badge { 
+    display: inline-block; 
+    font-size: 12px; 
+    font-weight: 700;
+    padding: 6px 14px; 
+    border-radius: 20px; 
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  .t-question { 
+    font-size: 18px; 
+    font-weight: 700; 
+    color: #2c3e50; 
+    line-height: 1.6; 
+    margin-bottom: 1.5rem;
+  }
+  
+  .t-scenario { 
+    background: linear-gradient(135deg, #f5f7fa, #f0f0f5);
+    border-left: 4px solid #667eea;
+    border-radius: 8px; 
+    padding: 16px;
+    font-size: 14px; 
+    color: #555;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+    font-style: italic;
+  }
+  
+  .t-opts { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 12px; 
+    margin-bottom: 1.5rem; 
+  }
+  
+  .t-opt { 
+    text-align: left; 
+    padding: 14px 16px; 
+    border-radius: 10px; 
+    border: 2px solid #e8e8f0; 
+    background: #fafbfd;
+    font-size: 14px; 
+    color: #444; 
+    cursor: pointer; 
+    line-height: 1.5;
+    transition: all 0.3s ease;
+    font-weight: 500;
+  }
+  
+  .t-opt:hover { 
+    border-color: #667eea;
+    background: #f0f3ff;
+    transform: translateX(4px);
+  }
+  
+  .t-opt.ok { 
+    background: #E1F5EE;
+    border-color: #1D9E75;
+    color: #085041; 
+    pointer-events: none;
+    font-weight: 600;
+  }
+  
+  .t-opt.ko { 
+    background: #FCEBEB;
+    border-color: #E24B4A;
+    color: #791F1F; 
+    pointer-events: none;
+    font-weight: 600;
+  }
+  
+  .t-opt.neutral { 
+    pointer-events: none; 
+    opacity: 0.5; 
+  }
+  
+  .t-tf-opts { 
+    display: flex; 
+    gap: 12px; 
+    margin-bottom: 1.5rem; 
+  }
+  
+  .t-tf-btn { 
+    flex: 1; 
+    padding: 14px; 
+    border-radius: 10px; 
+    border: 2px solid #e8e8f0;
+    background: #fafbfd;
+    font-size: 15px; 
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  
+  .t-tf-btn:hover { 
+    background: #f0f3ff;
+    border-color: #667eea;
+    transform: translateY(-2px);
+  }
+  
+  .t-tf-btn.ok { 
+    background: #E1F5EE;
+    border-color: #1D9E75;
+    color: #085041; 
+    pointer-events: none;
+  }
+  
+  .t-tf-btn.ko { 
+    background: #FCEBEB;
+    border-color: #E24B4A;
+    color: #791F1F; 
+    pointer-events: none;
+  }
+  
+  .t-tf-btn.neutral { 
+    pointer-events: none; 
+    opacity: 0.5; 
+  }
+  
+  .t-fb { 
+    font-size: 14px; 
+    color: #555;
+    line-height: 1.7; 
+    min-height: 20px; 
+    margin-bottom: 1.5rem; 
+    padding: 14px; 
+    border-radius: 10px;
+    border-left: 4px solid #667eea;
+    display: none; 
+    background: #f0f3ff;
+  }
+  
+  .t-fb.show { display: block; animation: slideIn 0.3s ease; }
+  
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .t-fb.ok { 
+    background: #E1F5EE;
+    border-color: #1D9E75;
+    color: #085041;
+  }
+  
+  .t-fb.ko { 
+    background: #FCEBEB;
+    border-color: #E24B4A;
+    color: #791F1F;
+  }
+  
+  .t-next { 
+    margin-top: 1.5rem;
+    padding: 12px 28px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  
+  .t-next:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(102, 126, 234, 0.4);
+  }
+  
+  .result-box { 
+    text-align: center; 
+    padding: 2rem 1rem; 
+    animation: fadeIn 0.5s ease;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  .r-num { 
+    font-size: 64px; 
+    font-weight: 800;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+  
+  .r-sub { 
+    font-size: 15px; 
+    color: #666;
+    margin: 0.8rem 0 1.5rem;
+    font-weight: 500;
+  }
+  
+  .r-verdict { 
+    font-size: 16px; 
+    font-weight: 700; 
+    padding: 12px 24px; 
+    border-radius: 20px;
+    display: inline-block; 
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  
+  .r-breakdown { 
+    text-align: left; 
+    margin: 0 auto 2rem; 
+    max-width: 450px;
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+  }
+  
+  .r-row { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    padding: 12px 0; 
+    border-bottom: 1px solid #e0e0e0;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  
+  .r-row:last-child { border-bottom: none; }
+  
+  .r-cat { 
+    color: #666;
+  }
+  
+  .r-mark { 
+    font-weight: 700; 
+  }
+  
+  .r-mark.ok { 
+    color: #0F6E56;
+  }
+  
+  .r-mark.ko { 
+    color: #A32D2D;
+  }
+  
+  .r-btns { 
+    display: flex; 
+    gap: 12px; 
+    justify-content: center; 
+    flex-wrap: wrap; 
+  }
+  
+  .r-btns button {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  
+  .r-btns button:first-child {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+  }
+  
+  .r-btns button:first-child:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(102, 126, 234, 0.4);
+  }
+  
+  .r-btns button:last-child {
+    background: #f0f3ff;
+    color: #667eea;
+    border: 2px solid #667eea;
+  }
+  
+  .r-btns button:last-child:hover {
+    background: #667eea;
+    color: white;
+  }
+  
+  .footer {
+    text-align: center;
+    padding: 2rem 1rem;
+    font-size: 14px;
+    color: #999;
+    margin-top: 1.5rem;
+    border-top: 1px solid #e0e0e0;
+    font-style: italic;
+    letter-spacing: 0.5px;
+  }
+  
+  .footer span {
+    color: #667eea;
+    font-weight: 600;
+  }
+</style>
+
+<div class="t-wrap">
+  <div id="quiz-view">
+    <div class="t-header">
+      <span class="t-progress" id="t-prog">Question 1 / 12</span>
+      <span class="t-score" id="t-sc">0 pts</span>
+    </div>
+    <div class="prog-bg"><div class="prog-fill" id="t-pfill" style="width:0%"></div></div>
+    <div class="t-type-badge" id="t-badge"></div>
+    <div class="t-question" id="t-q"></div>
+    <div class="t-scenario" id="t-sc-box" style="display:none"></div>
+    <div id="t-opts-area"></div>
+    <div class="t-fb" id="t-fb"></div>
+    <button class="t-next" id="t-next-btn" onclick="nextQ()" style="display:none">Question suivante</button>
+  </div>
+  <div id="result-view" style="display:none">
+    <div class="result-box">
+      <div class="r-num" id="r-num"></div>
+      <div class="r-sub" id="r-sub"></div>
+      <div class="r-verdict" id="r-verdict"></div>
+      <div class="r-breakdown" id="r-breakdown"></div>
+      <div class="r-btns">
+        <button onclick="restart()">Recommencer</button>
+        <button onclick="sendPrompt('Quels sont les points sur lesquels je dois encore travailler en droit des contrats ?')">Que retravailler ? ↗</button>
+      </div>
+      <div class="footer">
+        Par votre humble serviteur <span>Doriel, Jr</span> — vous demande merci 🙏🏿✨
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const QUESTIONS = [
+  { type:'qcm', badge:'Classification', badgeColor:'#EEEDFE', badgeText:'#3C3489',
+    q:'Un contrat de bail (loyer mensuel) est à exécution…',
+    opts:['Instantanée','Successive','Aléatoire','Unilatérale'],
+    ans:1, exp:'Le bail s\'exécute mois après mois dans le temps : c\'est un contrat à exécution successive. La durée est un élément essentiel.' },
+
+  { type:'vf', badge:'Vrai ou Faux', badgeColor:'#E1F5EE', badgeText:'#085041',
+    q:'Un contrat consensuel ne peut pas être prouvé sans écrit.',
+    ans:false, exp:'FAUX. Le consensualisme concerne la FORMATION (accord des volontés suffit). L\'écrit ne sert qu\'à la PREUVE — deux choses bien distinctes.' },
+
+  { type:'scenario', badge:'Qualification', badgeColor:'#FAECE7', badgeText:'#712B13',
+    q:'Qualifiez ce contrat en choisissant la bonne combinaison.',
+    scenario:'Diallo achète une assurance-vie. Il verse 25 000 FCFA/mois. S\'il décède, ses héritiers touchent 10 millions.',
+    opts:['Synallagmatique + onéreux + commutatif + successif','Synallagmatique + onéreux + aléatoire + successif','Unilatéral + gratuit + aléatoire + instantané','Synallagmatique + gratuit + aléatoire + successif'],
+    ans:1, exp:'Synallagmatique (obligations réciproques), onéreux (primes contre couverture), ALÉATOIRE (le versement dépend du décès, événement incertain), successif (primes mensuelles).' },
+
+  { type:'qcm', badge:'Définition', badgeColor:'#EEEDFE', badgeText:'#3C3489',
+    q:'La nullité relative protège…',
+    opts:['L\'ordre public uniquement','Un intérêt privé (la personne protégée peut seule l\'invoquer)','Tout intéressé sans délai','L\'État et les tiers'],
+    ans:1, exp:'La nullité relative (art. 1181) protège un intérêt privé : vices du consentement, incapacité. Seule la partie protégée peut l\'invoquer, dans un délai de 5 ans.' },
+
+  { type:'vf', badge:'Vrai ou Faux', badgeColor:'#E1F5EE', badgeText:'#085041',
+    q:'Dans un contrat aléatoire, une partie peut demander la rescision pour lésion.',
+    ans:false, exp:'FAUX. L\'aléa fait obstacle à toute action en rescision pour lésion (art. 1108). En acceptant l\'aléa, les parties renoncent à se plaindre du déséquilibre éventuel.' },
+
+  { type:'scenario', badge:'Piège', badgeColor:'#FAEEDA', badgeText:'#633806',
+    q:'Ibou prête 200 000 FCFA à Omar sans intérêt. Quel type de contrat ?',
+    scenario:'Ibou remet les billets à Omar. Omar s\'engage à rembourser dans 3 mois. Aucun intérêt n\'est prévu.',
+    opts:['Synallagmatique + onéreux','Unilatéral + gratuit + réel','Synallagmatique + gratuit + consensuel','Unilatéral + onéreux + solennel'],
+    ans:1, exp:'Unilatéral (seul Omar s\'oblige à rembourser), gratuit (pas d\'intérêt = pas de contrepartie pour Ibou), réel (le contrat se forme à la REMISE des billets).' },
+
+  { type:'qcm', badge:'Distinction clé', badgeColor:'#E6F1FB', badgeText:'#0C447C',
+    q:'Quelle est la principale conséquence de la distinction contrat instantané / successif ?',
+    opts:['Les règles de preuve sont différentes','La résiliation remplace la résolution pour les contrats successifs','Le consentement n\'est pas requis pour les contrats successifs','La nullité n\'existe que pour les contrats instantanés'],
+    ans:1, exp:'Pour un contrat successif, on prononce la RÉSILIATION (effet pour l\'avenir, pas de rétroactivité). Pour un contrat instantané, c\'est la RÉSOLUTION (effet rétroactif avec restitutions).' },
+
+  { type:'vf', badge:'Vrai ou Faux', badgeColor:'#E1F5EE', badgeText:'#085041',
+    q:'La donation est un contrat synallagmatique à titre gratuit.',
+    ans:false, exp:'FAUX. La donation est UNILATÉRALE (seul le donateur s\'oblige) ET à titre gratuit. Un contrat synallagmatique a toujours des obligations des deux côtés.' },
+
+  { type:'scenario', badge:'Qualification', badgeColor:'#FAECE7', badgeText:'#712B13',
+    q:'Identifiez le bon type de formation de ce contrat.',
+    scenario:'Fatou achète un appartement. Le notaire rédige un acte authentique signé par les deux parties. Sans cet acte, la vente est nulle.',
+    opts:['Contrat consensuel','Contrat réel','Contrat solennel','Contrat d\'adhésion'],
+    ans:2, exp:'C\'est un contrat SOLENNEL : l\'acte notarié est une condition de VALIDITÉ (ad validitatem), pas seulement de preuve. Sans lui, la vente est nulle absolument.' },
+
+  { type:'qcm', badge:'Obligation', badgeColor:'#EEEDFE', badgeText:'#3C3489',
+    q:'Le médecin est tenu envers son patient d\'une obligation de…',
+    opts:['Résultat : il doit guérir le patient','Moyens : il doit mettre en œuvre tous les soins appropriés','Garantie : il est responsable quoi qu\'il arrive','Donner : il doit transférer un droit réel'],
+    ans:1, exp:'Le médecin est tenu d\'une obligation de MOYENS (arrêt Mercier 1936) : il doit prodiguer des soins attentifs et conformes aux données acquises de la science, sans garantir la guérison.' },
+
+  { type:'vf', badge:'Vrai ou Faux', badgeColor:'#E1F5EE', badgeText:'#085041',
+    q:'L\'exception d\'inexécution peut être invoquée dans un contrat unilatéral.',
+    ans:false, exp:'FAUX. L\'exception d\'inexécution (art. 1219) est réservée aux contrats SYNALLAGMATIQUES, où les obligations sont réciproques et interdépendantes. Dans un contrat unilatéral, une seule partie s\'oblige.' },
+
+  { type:'scenario', badge:'Cas pratique', badgeColor:'#FAEEDA', badgeText:'#633806',
+    q:'Quel remède Aminata peut-elle utiliser ?',
+    scenario:'Aminata a signé un contrat de bail pour 2 ans. Son propriétaire ne répare plus rien depuis 6 mois malgré ses demandes écrites. Elle veut mettre fin au contrat.',
+    opts:['Demander la résolution avec effet rétroactif','Demander la résiliation pour l\'avenir','Invoquer la nullité relative','Demander des dommages-intérêts compensatoires uniquement'],
+    ans:1, exp:'Bail = contrat à exécution SUCCESSIVE → on prononce la RÉSILIATION (effet pour l\'avenir, pas de rétroactivité). La résolution avec rétroactivité est réservée aux contrats instantanés.' },
+
+  { type:'qcm', badge:'Représentation', badgeColor:'#EEEDFE', badgeText:'#3C3489',
+    q:'La représentation directe se caractérise par…',
+    opts:['Le mandataire conclut au nom du mandant','Le mandataire conclut en son propre nom pour le compte d\'autrui','Le mandant reste caché','L\'absence totale de lien entre le mandant et le tiers'],
+    ans:0, exp:'En représentation DIRECTE, le mandataire agit AU NOM ET POUR LE COMPTE du mandant. Le tiers connaît l\'existence du mandant et traite avec le mandataire en qualité de représentant.' },
+
+  { type:'vf', badge:'Vrai ou Faux', badgeColor:'#E1F5EE', badgeText:'#085041',
+    q:'Un contrat simulé peut être totalement nul.',
+    ans:true, exp:'VRAI. Si la simulation est frauduleuse (fraude à la loi, aux créanciers, etc.), le contrat apparent peut être attaqué en nullité absolue selon les circonstances.' },
+
+  { type:'qcm', badge:'Causes de nullité', badgeColor:'#EEEDFE', badgeText:'#3C3489',
+    q:'La nullité absolue se prescrit par…',
+    opts:['3 ans','5 ans','Pas de délai — imprescriptibilité','10 ans'],
+    ans:2, exp:'La nullité absolue est IMPRESCRIPTIBLE (art. 1179) : elle protège l\'ordre public. Tout intéressé peut l\'invoquer à tout moment, même 20 ans après la conclusion du contrat.' },
+
+  { type:'scenario', badge:'Obligation', badgeColor:'#FAECE7', badgeText:'#712B13',
+    q:'Classifiez cette obligation.',
+    scenario:'Karim s\'oblige à livrer 50 sacs de ciment à Koné dans un délai d\'une semaine. Si Karim n\'y arrive pas, il doit payer une pénalité de 50 000 FCFA.',
+    opts:['Naturelle + conditionnelle','Civile + simplement alternative','Civile + pure et simple','Civile + à terme','Civile + avec clause pénale'],
+    ans:4, exp:'C\'est une obligation civile (exécutoire) avec CLAUSE PÉNALE : une somme fixée à l\'avance en cas de non-exécution ou retard, pour dédommager le créancier sans avoir à prouver le préjudice.' },
+
+  { type:'vf', badge:'Vrai ou Faux', badgeColor:'#E1F5EE', badgeText:'#085041',
+    q:'L\'extinction d\'une obligation libère aussi le tiers qui avait fourni une caution.',
+    ans:false, exp:'FAUX. La caution reste engagée sauf si elle a expressément renoncé, ou sauf stipulation contraire. L\'extinction de l\'obligation principale ne libère pas automatiquement la caution.' },
+
+  { type:'qcm', badge:'Transfert', badgeColor:'#EEEDFE', badgeText:'#3C3489',
+    q:'La cession de créance oblige le cédant à…',
+    opts:['Garantir l\'existence de la créance et sa propriété','Garantir la solvabilité du débiteur','Garantir que la créance n\'est pas prescrite','Garantir le paiement lui-même'],
+    ans:0, exp:'Le cédant garantit DE DROIT (art. 1258) : l\'existence et la propriété de la créance. Il ne garantit PAS la solvabilité du débiteur, sauf clause spéciale (cession "à titre onéreux").' },
+
+  { type:'scenario', badge:'Prescription', badgeColor:'#FAEEDA', badgeText:'#633806',
+    q:'Quand l\'action prescrit-elle ?',
+    scenario:'Moussa prête 100 000 FCFA à Sow en janvier 2020. Aucune reconnaissance de dette n\'a été signée. En 2026, Moussa demande le remboursement.',
+    opts:['Action prescrite : 2 ans révolus','Action prescrite : 5 ans révolus','Action non prescrite : délai illimité pour prêt sans écrit','Action prescrite : 10 ans révolus'],
+    ans:1, exp:'Prêt de consommation sans écrit → prescription 5 ans (art. 2272). De 2020 à 2026 = 6 ans révolus. L\'action est donc PRESCRITE.' },
+
+  { type:'qcm', badge:'Interprétation', badgeColor:'#EEEDFE', badgeText:'#3C3489',
+    q:'En cas d\'ambiguïté contractuelle, on applique…',
+    opts:['L\'interprétation qui favorise celui qui a rédigé','L\'interprétation qui favorise celui qui a accepté (contre-partie)','L\'interprétation la plus stricte pour tous','La méthode du « bon père de famille »'],
+    ans:1, exp:'En cas de doute/ambiguïté (art. 1162), les clauses s\'interprètent contre celui qui les a proposées (rédacteur) et EN FAVEUR de l\'autre partie (celui qui a adhéré).' },
+];
+
+let shuffled = [];
+let cur = 0;
+let pts = 0;
+let results = [];
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length-1; i>0; i--) { const j = Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+  return a;
+}
+
+function restart() {
+  shuffled = shuffle(QUESTIONS);
+  cur = 0; pts = 0; results = [];
+  document.getElementById('result-view').style.display = 'none';
+  document.getElementById('quiz-view').style.display = 'block';
+  renderQ();
+}
+
+function renderQ() {
+  const q = shuffled[cur];
+  const total = shuffled.length;
+  document.getElementById('t-prog').textContent = 'Question ' + (cur+1) + ' / ' + total;
+  document.getElementById('t-sc').textContent = pts + ' pt' + (pts>1?'s':'');
+  document.getElementById('t-pfill').style.width = Math.round((cur/total)*100) + '%';
+  const badge = document.getElementById('t-badge');
+  badge.textContent = q.badge;
+  badge.style.background = q.badgeColor;
+  badge.style.color = q.badgeText;
+  document.getElementById('t-q').textContent = q.q;
+  const scBox = document.getElementById('t-sc-box');
+  if (q.scenario) { scBox.textContent = q.scenario; scBox.style.display = 'block'; }
+  else scBox.style.display = 'none';
+  const fb = document.getElementById('t-fb');
+  fb.className = 't-fb'; fb.textContent = '';
+  document.getElementById('t-next-btn').style.display = 'none';
+  const area = document.getElementById('t-opts-area');
+  if (q.type === 'vf') {
+    area.innerHTML = `<div class="t-tf-opts">
+      <button class="t-tf-btn" onclick="answerVF(true)">Vrai</button>
+      <button class="t-tf-btn" onclick="answerVF(false)">Faux</button>
+    </div>`;
+  } else {
+    area.innerHTML = '<div class="t-opts">' + q.opts.map((o,i) =>
+      `<button class="t-opt" onclick="answerQCM(${i})">${o}</button>`
+    ).join('') + '</div>';
+  }
+}
+
+function reveal(correct, exp) {
+  const fb = document.getElementById('t-fb');
+  fb.textContent = (correct ? '✓ Correct — ' : '✗ Incorrect — ') + exp;
+  fb.className = 't-fb show ' + (correct ? 'ok' : 'ko');
+  document.getElementById('t-next-btn').style.display = '';
+  results.push({ q: shuffled[cur].badge, ok: correct });
+  if (correct) pts++;
+  document.getElementById('t-sc').textContent = pts + ' pt' + (pts>1?'s':'');
+}
+
+function answerQCM(i) {
+  const q = shuffled[cur];
+  document.querySelectorAll('.t-opt').forEach((b,j) => {
+    b.classList.add(j === q.ans ? 'ok' : (j === i && i !== q.ans ? 'ko' : 'neutral'));
+  });
+  reveal(i === q.ans, q.exp);
+}
+
+function answerVF(val) {
+  const q = shuffled[cur];
+  const correct = val === q.ans;
+  document.querySelectorAll('.t-tf-btn').forEach(b => {
+    const bval = b.textContent === 'Vrai';
+    b.classList.add(bval === q.ans ? 'ok' : (bval === val && !correct ? 'ko' : 'neutral'));
+  });
+  reveal(correct, q.exp);
+}
+
+function nextQ() {
+  cur++;
+  if (cur >= shuffled.length) { showResult(); return; }
+  renderQ();
+}
+
+function showResult() {
+  document.getElementById('quiz-view').style.display = 'none';
+  document.getElementById('result-view').style.display = 'block';
+  const total = shuffled.length;
+  const pct = Math.round((pts/total)*100);
+  document.getElementById('r-num').textContent = pts + '/' + total;
+  document.getElementById('r-sub').textContent = pct + '% de bonnes réponses';
+  const v = document.getElementById('r-verdict');
+  if (pct >= 83) { v.textContent = 'Excellent — tu maîtrises le cours'; v.style.background='#E1F5EE'; v.style.color='#085041'; }
+  else if (pct >= 58) { v.textContent = 'Bien — quelques points à consolider'; v.style.background='#FAEEDA'; v.style.color='#633806'; }
+  else { v.textContent = 'À retravailler — revois les fondamentaux'; v.style.background='#FCEBEB'; v.style.color='#791F1F'; }
+  const cats = {};
+  results.forEach(r => { if (!cats[r.q]) cats[r.q]={ok:0,total:0}; cats[r.q].total++; if(r.ok) cats[r.q].ok++; });
+  document.getElementById('r-breakdown').innerHTML = Object.entries(cats).map(([cat,v]) =>
+    `<div class="r-row"><span class="r-cat">${cat}</span><span class="r-mark ${v.ok===v.total?'ok':'ko'}">${v.ok}/${v.total}</span></div>`
+  ).join('');
+}
+
+restart();
+</script>
